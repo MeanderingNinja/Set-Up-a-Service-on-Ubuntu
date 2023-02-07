@@ -43,7 +43,8 @@ The directives that actually defined how to manage our services:
 - `Restart=`: This indicates the circumstances under which systemd will attempt to automatically restart the service. This can be set to values like “always”, “on-success”, “on-failure”, “on-abnormal”, “on-abort”, or “on-watchdog”. These will trigger a restart according to the way that the service was stopped.
 - `RestartSec=`: If automatically restarting the service is enabled, this specifies the amount of time to wait before attempting to restart the service.
 - `TimeoutSec=`: This configures the amount of time that systemd will wait when stopping or stopping the service before marking it as failed or forcefully killing it. You can set separate timeouts with TimeoutStartSec= and TimeoutStopSec= as well.
-### A simple example of a service unit file I created
+### How I created a service for my cat bathroom monitoring system project
+The following unit file was created under `/etc/systemd/system/` and is named `cat_data_watcher.service`.  
 ```
 [Unit]
 Description=My cat_data_watcher daemon!
@@ -60,6 +61,7 @@ RestartSec=5
 [Install]
 WantedBy=multi-user.target
 ```
+
 
 
 
