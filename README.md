@@ -75,6 +75,6 @@ sudo systemctl enable cat_data_watcher
 ```
 sudo journalctl --unit=cat_data_watcher
 ```
-
+Now, the service is set up. This particular service I created watches new csv files in `/var/nfs/cat_watcher_output` (produced by the **CatWatcher program** running in the Nano device). When a new file is found, **it loads the data to the database `metabase_catwatcher_db`**. 
 
 
