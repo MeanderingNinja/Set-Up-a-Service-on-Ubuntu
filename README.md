@@ -61,7 +61,16 @@ RestartSec=5
 [Install]
 WantedBy=multi-user.target
 ```
+Then start the service, using the following command:
+```
+sudo systemctl daemon-reload
+sudo systemctl start cat_data_watcher
+sudo systemctl status cat_data_watcher
 
+# If everything is looking good, enable it so that it will run on boot 
+sudo systemctl enable cat_data_watcher
+# Restart the server and check if it's still running
+```
 
 
 
