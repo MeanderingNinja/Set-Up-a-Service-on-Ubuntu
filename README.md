@@ -37,6 +37,11 @@ The last section is often the [Install] section. This section is optional and is
 - `RequiredBy=`: This directive is very similar to the `WantedBy=` directive, but instead specifies a required dependency that will cause the activation to fail if not met.
 #### Unit-Specific Section Directives (The [Service] Section)
 Sandwiched between the previous two sections, you will likely find unit type-specific sections. I'll only list The [Service] Section here. The [Service] section is used to provide configuration that is only applicable for services.
-- `Type=`: One of the basic things that should be specified within the [Service] section. This categorizes services by their process and daemonizing behavior. This is important because it tells systemd how to correctly manage the servie and find out its state.
+- `Type=`: One of the basic things that should be specified within the [Service] section. This categorizes services by their process and daemonizing behavior. This is important because it tells systemd how to correctly manage the servie and find out its state. `simple` is the default if the `Type=` and `Busname=` directives are not set, but the `ExecStart=` is set. 
+The directives that actually defined how to manage our services:
+- `ExecStart=`: This specifies the full path and the arguments of the command to be executed to start the process. This may only be specified once (except for “oneshot” services). If the path to the command is preceded by a dash “-” character, non-zero exit statuses will be accepted without marking the unit activation as failed.
+- `Restart=`: This indicates the circumstances under which systemd will attempt to automatically restart the service. This can be set to values like “always”, “on-success”, “on-failure”, “on-abnormal”, “on-abort”, or “on-watchdog”. These will trigger a restart according to the way that the service was stopped.
+- RestartSec=: If automatically restarting the service is enabled, this specifies the amount of time to wait before attempting to restart the service.
+- TimeoutSec=: This configures the amount of time that systemd will wait when stopping or stopping the service before marking it as failed or forcefully killing it. You can set separate timeouts with TimeoutStartSec= and TimeoutStopSec= as well.
 
 
