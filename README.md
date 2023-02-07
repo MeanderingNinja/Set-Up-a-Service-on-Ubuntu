@@ -42,6 +42,24 @@ The directives that actually defined how to manage our services:
 - `ExecStart=`: This specifies the full path and the arguments of the command to be executed to start the process. This may only be specified once (except for “oneshot” services). If the path to the command is preceded by a dash “-” character, non-zero exit statuses will be accepted without marking the unit activation as failed.
 - `Restart=`: This indicates the circumstances under which systemd will attempt to automatically restart the service. This can be set to values like “always”, “on-success”, “on-failure”, “on-abnormal”, “on-abort”, or “on-watchdog”. These will trigger a restart according to the way that the service was stopped.
 - `RestartSec=`: If automatically restarting the service is enabled, this specifies the amount of time to wait before attempting to restart the service.
-- `TimeoutSec=`: This configures the amount of time that systemd will wait when stopping or stopping the service before marking it as failed or forcefully killing it. You can set separate timeouts with TimeoutStartSec= and TimeoutStopSec= as well..
+- `TimeoutSec=`: This configures the amount of time that systemd will wait when stopping or stopping the service before marking it as failed or forcefully killing it. You can set separate timeouts with TimeoutStartSec= and TimeoutStopSec= as well.
+### A simple example of a service unit file I created
+```
+[Unit]
+Description=My cat_data_watcher daemon!
+[Service]
+User=cat_dev
+#Code to execute
+#Can be the path to an executable or code itself
+#WorkingDirectory=/home/ubuntu/mydaemon
+ExecStart=/home/cat_dev/.local/bin/cat_data_watcher
+Type=simple
+TimeoutStopSec=10
+Restart=on-failure
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
+```
+
 
 
