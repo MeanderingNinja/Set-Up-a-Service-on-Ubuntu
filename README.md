@@ -30,8 +30,8 @@ The system’s copy of unit files are generally kept in the `/lib/systemd/system
 The internal structure of unit files are organized with sections. Sections are denoted by a pair of square brackets “[” and “]” with the section name enclosed within. Section names are well-defined and case-sensitive. Within these sections, unit behavior and metadata is defined through the use of simple directives using a key-value format with assignment indicated by an equal sign.
 #### [Unit] Section Directives
 The first section found in most unit files is the [Unit] section. This is generally used for defining metadata for the unit and configuring the relationship of the unit to other units. This section is often placed at the top because it provides an overview of the unit. Some common directives that you will find in the [Unit] section: 
-- 
-- 
+- jj
+- kk
 #### [Install] Section Directives
 The last section is often the [Install] section. This section is optional and is used to define the behavior or a unit if it is enabled or disabled. Enabling a unit marks it to be automatically started at boot. Because of this, only units that can be enabled will have this section. The directives within dictate what should happen when the unit is enabled:
 - WantedBy=: The WantedBy= directive is the most common way to specify how a unit should be enabled. This directive allows you to specify a dependency relationship in a similar way to the Wants= directive does in the [Unit] section.
