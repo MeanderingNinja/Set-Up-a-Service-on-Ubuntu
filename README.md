@@ -1,4 +1,4 @@
-# Create-a-Service-on-Ubuntu
+# Create a Service on Ubuntu
 ## [What is a Systemd Service?](https://linuxhandbook.com/create-systemd-services/)
 A service is a background process, known as daemons in systems like Unix or Linux. A [system unit file](https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files) is used to define a service.
 ### What is a [process](https://tldp.org/LDP/tlk/kernel/processes.html)?
@@ -174,8 +174,9 @@ MB_EMOJI_IN_LOGS=true
 sudo systemctl daemon-reload
 sudo systemctl start metabase.service
 sudo systemctl status metabase.service
-
-# Enable the service to startup during boot
+```
+Enable the service to startup during boot
+```
 sudo systemctl enable metabase.service
 ```
 That's it!
