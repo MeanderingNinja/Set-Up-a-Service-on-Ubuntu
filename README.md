@@ -46,7 +46,7 @@ The directives that actually defined how to manage our services:
 - `Restart=`: This indicates the circumstances under which systemd will attempt to automatically restart the service. This can be set to values like “always”, “on-success”, “on-failure”, “on-abnormal”, “on-abort”, or “on-watchdog”. These will trigger a restart according to the way that the service was stopped.
 - `RestartSec=`: If automatically restarting the service is enabled, this specifies the amount of time to wait before attempting to restart the service.
 - `TimeoutSec=`: This configures the amount of time that systemd will wait when stopping or stopping the service before marking it as failed or forcefully killing it. You can set separate timeouts with TimeoutStartSec= and TimeoutStopSec= as well.
-### How I created a service for my cat bathroom monitoring system project
+## How I created a service for my cat bathroom monitoring system project
 The following unit file was created under `/etc/systemd/system/` and is named `cat_data_watcher.service`.  
 ```
 [Unit]
@@ -79,5 +79,41 @@ sudo systemctl enable cat_data_watcher
 sudo journalctl --unit=cat_data_watcher
 ```
 Now, the service is set up. This particular service I created watches new csv files in `/var/nfs/cat_watcher_output` (produced by the **CatWatcher program** running in the Nano device). When a new file is found, **it loads the data to the database `metabase_catwatcher_db`**. 
+
+## How I Created a Metabase Service with Nginx
+### Preparation 
+- Install Java Runtime Environment ([JRE](https://adoptium.net/installation/))
+- Create a directory `/opt/catwatcher/metabase`, where the downloaded [metabase jar file](https://www.metabase.com/start/oss/jar) is stored. 
+- Go to the metabase directory and [run the JAR](https://www.metabase.com/docs/latest/installation-and-operation/running-the-metabase-jar-file) ```java -jar metabase.jar``` 
+
+### Steps
+1. Create a Metabase Service Unit File
+Services are typically registered at `/etc/systemd/system/<servicename>`. Use the following command to create a new file:
+```sudo nano /etc/systemd/system/metabase.service```
+Write the following content to the newly created unit file
+```
+[Unit]
+Description=Metabase server
+After=syslog.target
+After=network.target
+ 
+[Service]
+WorkingDirectory=/home/cat_dev/cat_tech/metabase_jar
+ExecStart=/usr/bin/java -jar /opt/catwatcher/metabase/metabase.jar
+EnvironmentFile=/etc/default/metabase
+# User is changed to cat_dev to avoid error
+User=metabase 
+Type=simple
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=metabase
+SuccessExitStatus=143
+TimeoutStopSec=120
+Restart=always
+  
+[Install]
+WantedBy=multi-user.target
+```
+
 
 
