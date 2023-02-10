@@ -84,7 +84,26 @@ Now, the service is set up. This particular service I created watches new csv fi
 ### Preparation 
 - Install Java Runtime Environment ([JRE](https://adoptium.net/installation/))
 - Create a directory `/opt/catwatcher/metabase`, where the downloaded [metabase jar file](https://www.metabase.com/start/oss/jar) is stored. 
-- Go to the metabase directory and [run the JAR](https://www.metabase.com/docs/latest/installation-and-operation/running-the-metabase-jar-file) ```java -jar metabase.jar``` 
+- Go to the metabase directory and [run the JAR](https://www.metabase.com/docs/latest/installation-and-operation/running-the-metabase-jar-file) ```java -jar metabase.jar```
+- Make sure a Postgresql database is set up for the Metabase. The database should match `MB_DB_TYPE`, `MB_DB_DBNAME`, `MB_DB_USER`, and `MB_DB_PASS` environment variables stated in the metabase config file `/etc/default/metabase` (See Step 3)
+- Make sure nginx is set up to proxy requests to metabase. The content of the nginx config file I use is `/etc/nginx/sites-available/default`. The content is as follows:
+```
+# proxy requests to Metabase instance
+server {
+          listen 80;
+          listen [::]:80;
+          # localhost can be replaced as 192.168.1.157
+          server_name localhost; 
+          location / {
+           proxy_pass http://192.168.1.157:3000; # Using 127.0.0.1 does not work
+          }
+        }
+```
+Run the commands after creating the nginx config file: 
+```
+sudo nginx -t       
+sudo systemctl restart nginx
+```
 
 ### Steps
 #### 1. Create a Metabase Service Unit File 
@@ -128,3 +147,25 @@ Restart the syslog service to load the new config
 ```
 sudo systemctl restart rsyslog.service
 ```
+#### 3. Create the Metabase Config file for environment variables 
+[Metabase Environment variables](https://www.metabase.com/docs/latest/configuring-metabase/environment-variables) provide a good way to customize and configure your Metabase instance on your server. On Debian systems, services typically expect to have accompanying configs inside `etc/default/<service-name>`
+Create a new file to store the environment variables
+```
+sudo nano /etc/default/metabase
+```
+Write in the following content:
+```
+MB_PASSWORD_COMPLEXITY=normal
+MB_JETTY_HOST=192.168.1.157
+MB_JETTY_PORT=3000
+MB_DB_TYPE=postgres
+MB_DB_DBNAME=metabase_catwatcher_db
+MB_DB_PORT=5432
+MB_DB_USER=metabase_catwatcher_user
+MB_DB_PASS=metabase_catwatcher_pw
+MB_DB_HOST=localhost  # 20220822 changed to 192.168.1.157
+MB_EMOJI_IN_LOGS=true
+# Add any other env vars you want available to Metabase
+```
+
+
