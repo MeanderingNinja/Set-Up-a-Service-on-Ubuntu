@@ -87,7 +87,7 @@ Now, the service is set up. This particular service I created watches new csv fi
 - Go to the metabase directory and [run the JAR](https://www.metabase.com/docs/latest/installation-and-operation/running-the-metabase-jar-file) ```java -jar metabase.jar``` 
 
 ### Steps
-#### 1. Create a Metabase Service Unit File <br>
+#### 1. Create a Metabase Service Unit File 
 Services are typically registered at `/etc/systemd/system/<servicename>`. Use the following command to create a new file:
 ```sudo nano /etc/systemd/system/metabase.service```
 Write the following content to the newly created unit file
@@ -114,6 +114,13 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 ```
-
-
-
+#### 2. Create syslog conf
+Create a syslog conf to make sure systemd can handle the logs properly
+```sudo nano /etc/rsyslog.d/metabase.conf```
+Write the following content in the newly created syslog conf file
+```
+if $programname == 'metabase' then /var/log/metabase.log
+& stop
+```
+Restart the syslog service to load the new config
+```sudo systemctl restart rsyslog.service```
