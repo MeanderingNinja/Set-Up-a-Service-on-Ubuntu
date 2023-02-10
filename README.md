@@ -87,7 +87,7 @@ Now, the service is set up. This particular service I created watches new csv fi
 - Go to the metabase directory and [run the JAR](https://www.metabase.com/docs/latest/installation-and-operation/running-the-metabase-jar-file) ```java -jar metabase.jar``` 
 
 ### Steps
-1. Create a Metabase Service Unit File <br>
+#### 1. Create a Metabase Service Unit File <br>
 Services are typically registered at `/etc/systemd/system/<servicename>`. Use the following command to create a new file:
 ```sudo nano /etc/systemd/system/metabase.service```
 Write the following content to the newly created unit file
