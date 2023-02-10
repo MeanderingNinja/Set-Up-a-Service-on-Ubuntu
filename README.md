@@ -116,11 +116,15 @@ WantedBy=multi-user.target
 ```
 #### 2. Create syslog conf
 Create a syslog conf to make sure systemd can handle the logs properly
-```sudo nano /etc/rsyslog.d/metabase.conf```
+```
+sudo nano /etc/rsyslog.d/metabase.conf
+```
 Write the following content in the newly created syslog conf file
 ```
 if $programname == 'metabase' then /var/log/metabase.log
 & stop
 ```
 Restart the syslog service to load the new config
-```sudo systemctl restart rsyslog.service```
+```
+sudo systemctl restart rsyslog.service
+```
