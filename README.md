@@ -101,7 +101,9 @@ server {
 ```
 Run the commands after creating the nginx config file: 
 ```
-sudo nginx -t       
+# Test if the config file is valid
+sudo nginx -t  
+# Restart the nginx service
 sudo systemctl restart nginx
 ```
 
