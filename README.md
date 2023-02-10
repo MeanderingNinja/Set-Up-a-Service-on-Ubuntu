@@ -178,4 +178,5 @@ sudo systemctl status metabase.service
 # Enable the service to startup during boot
 sudo systemctl enable metabase.service
 ```
+That's it!
 
