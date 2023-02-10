@@ -169,5 +169,13 @@ MB_DB_HOST=localhost  # 20220822 changed to 192.168.1.157
 MB_EMOJI_IN_LOGS=true
 # Add any other env vars you want available to Metabase
 ```
+#### 4. Register the Metabase service 
+```
+sudo systemctl daemon-reload
+sudo systemctl start metabase.service
+sudo systemctl status metabase.service
 
+# Enable the service to startup during boot
+sudo systemctl enable metabase.service
+```
 
