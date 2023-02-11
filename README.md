@@ -32,20 +32,14 @@ The system’s copy of unit files are generally kept in the `/lib/systemd/system
 #### Anatomy of a unit file
 The internal structure of unit files are organized with sections. Sections are denoted by a pair of square brackets “[” and “]” with the section name enclosed within. Section names are well-defined and case-sensitive. Within these sections, unit behavior and metadata is defined through the use of simple directives using a key-value format with assignment indicated by an equal sign.
 ##### *[Unit] Section Directives*
-**The first section found in most unit files is the [Unit] section.** This is generally used for defining metadata for the unit and configuring the relationship of the unit to other units. This section is often placed at the top because it provides an overview of the unit. Some common directives that you will find in the [Unit] section: 
-- `Description=`: This directive can be used to describe the name and basic functionality of the unit. It is returned by various systemd tools, so it is good to set this to something short, specific, and informative.
+**The first section found in most unit files is the [Unit] section.** This is generally used for defining metadata for the unit and configuring the relationship of the unit to other units. Some common directives that you will find in the [Unit] section: 
+
 ##### *[Install] Section Directives*
 **The last section is often the [Install] section.** This section is optional and is used to define the behavior or a unit if it is enabled or disabled. Enabling a unit marks it to be automatically started at boot. Because of this, only units that can be enabled will have this section. The directives within dictate what should happen when the unit is enabled:
-- `WantedBy=`: This directive is the most common way to specify how a unit should be enabled. This directive allows you to specify a dependency relationship. When a unit with this directive is enabled, a directory will be created within `/etc/systemd/system` named after the specified unit with .wants appended to the end. Within this, a symbolic link to the current unit will be created, creating the dependency. For instance, if the current unit has WantedBy=multi-user.target, a directory called `multi-user.target.wants` will be created within `/etc/systemd/system` (if not already available) and a symbolic link to the current unit will be placed within.
-- `RequiredBy=`: This directive is very similar to the `WantedBy=` directive, but instead specifies a required dependency that will cause the activation to fail if not met.
 ##### *Unit-Specific Section Directives (The [Service] Section)*
 Sandwiched between the previous two sections, you will likely find unit type-specific sections. I'll only list The [Service] Section here. The [Service] section is used to provide configuration that is only applicable for services.
-- `Type=`: One of the basic things that should be specified within the [Service] section. This categorizes services by their process and daemonizing behavior. This is important because it tells systemd how to correctly manage the servie and find out its state. `simple` is the default if the `Type=` and `Busname=` directives are not set, but the `ExecStart=` is set. 
-The directives that actually defined how to manage our services:
-- `ExecStart=`: This specifies the full path and the arguments of the command to be executed to start the process. This may only be specified once (except for “oneshot” services). If the path to the command is preceded by a dash “-” character, non-zero exit statuses will be accepted without marking the unit activation as failed.
-- `Restart=`: This indicates the circumstances under which systemd will attempt to automatically restart the service. This can be set to values like “always”, “on-success”, “on-failure”, “on-abnormal”, “on-abort”, or “on-watchdog”. These will trigger a restart according to the way that the service was stopped.
-- `RestartSec=`: If automatically restarting the service is enabled, this specifies the amount of time to wait before attempting to restart the service.
-- `TimeoutSec=`: This configures the amount of time that systemd will wait when stopping or stopping the service before marking it as failed or forcefully killing it. You can set separate timeouts with TimeoutStartSec= and TimeoutStopSec= as well.
+The directives that actually defined how to manage our services: 
+
 ## How I created a service for my cat bathroom monitoring system project
 The following unit file was created under `/etc/systemd/system/` and is named `cat_data_watcher.service`.  
 ```
@@ -135,6 +129,11 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 ```
+*Note: 
+*- The `After=network.target` directive means the metabase.service unit will be started after the network.target unit has been activated.
+*- The `WantedBy` directive is used to specify the target unit that the current unit should be started as part of. `WantedBy=multi-user.target` means that the unit *should be activated as part of the multi-user.target. The multi-user.target is a target unit that represents the state of the system when it is fully operational
+- `ExecStart=`: This specifies the full path and the arguments of the command to be executed to start the process.
+- `Type=simple` indicates that the unit being defined is a simple service unit.
 #### 2. Create syslog conf
 Create a syslog conf to make sure systemd can handle the logs properly
 ```
