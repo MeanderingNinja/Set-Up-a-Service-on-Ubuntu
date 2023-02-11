@@ -32,13 +32,12 @@ The system’s copy of unit files are generally kept in the `/lib/systemd/system
 #### What is the structure of a unit file?
 The internal structure of unit files are organized with **sections**. Sections are denoted by a pair of square brackets “[” and “]” with the section name enclosed within. Within these sections, unit behavior and metadata is defined through the use of simple **directives** using a key-value format with assignment indicated by an equal sign.
 ##### *[Unit] Section Directives*
-**The first section found in most unit files is the [Unit] section.** This is generally used for defining metadata for the unit and configuring the relationship of the unit to other units. Some common directives that you will find in the [Unit] section: 
+**The first section found in most unit files is the [Unit] section.** This is generally used for defining metadata for the unit and configuring the relationship of the unit to other units. 
 
 ##### *[Install] Section Directives*
-**The last section is often the [Install] section.** This section is optional and is used to define the behavior or a unit if it is enabled or disabled. Enabling a unit marks it to be automatically started at boot. Because of this, only units that can be enabled will have this section. The directives within dictate what should happen when the unit is enabled:
+**The last section is often the [Install] section.** This section is optional and is used to define the behavior or a unit if it is enabled or disabled. Enabling a unit marks it to be automatically started at boot. Because of this, only units that can be enabled will have this section. 
 ##### *Unit-Specific Section Directives (The [Service] Section)*
 Sandwiched between the previous two sections, you will likely find unit type-specific sections. I'll only list The [Service] Section here. The [Service] section is used to provide configuration that is only applicable for services.
-The directives that actually defined how to manage our services: 
 
 ## How I created a service for my cat bathroom monitoring system project
 The following unit file was created under `/etc/systemd/system/` and is named `cat_data_watcher.service`.  
