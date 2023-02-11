@@ -87,7 +87,7 @@ server {
           # localhost can be replaced as 192.168.1.157
           server_name localhost; 
           location / {
-           proxy_pass http://192.168.1.157:3000; # Using 127.0.0.1 does not work
+           proxy_pass http://192.168.1.157:3000; 
           }
         }
 ```
