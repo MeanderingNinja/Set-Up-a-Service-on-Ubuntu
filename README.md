@@ -30,7 +30,7 @@ In systemd, a unit refers to any resource that the system knows how to operate o
 The system’s copy of unit files are generally kept in the `/lib/systemd/system` directory. When software installs unit files on the system, this is the location where they are placed by default. **You should not edit files in this directory.** If you wish to modify the way that a unit functions, the best location to do so is within the `/etc/systemd/system` directory.
 
 #### What is the structure of a unit file?
-The internal structure of unit files are organized with sections. Sections are denoted by a pair of square brackets “[” and “]” with the section name enclosed within. Section names are well-defined and case-sensitive. Within these sections, unit behavior and metadata is defined through the use of simple directives using a key-value format with assignment indicated by an equal sign.
+The internal structure of unit files are organized with **sections**. Sections are denoted by a pair of square brackets “[” and “]” with the section name enclosed within. Within these sections, unit behavior and metadata is defined through the use of simple **directives** using a key-value format with assignment indicated by an equal sign.
 ##### *[Unit] Section Directives*
 **The first section found in most unit files is the [Unit] section.** This is generally used for defining metadata for the unit and configuring the relationship of the unit to other units. Some common directives that you will find in the [Unit] section: 
 
