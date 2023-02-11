@@ -77,7 +77,6 @@ Now, the service is set up. This particular service I created watches new csv fi
 ### Preparation 
 - Install Java Runtime Environment ([JRE](https://adoptium.net/installation/))
 - Create a directory `/opt/catwatcher/metabase`, where the downloaded [metabase jar file](https://www.metabase.com/start/oss/jar) is stored. 
-- Go to the metabase directory and [run the JAR](https://www.metabase.com/docs/latest/installation-and-operation/running-the-metabase-jar-file) ```java -jar metabase.jar```
 - Make sure a Postgresql database is set up for the Metabase. The database should match `MB_DB_TYPE`, `MB_DB_DBNAME`, `MB_DB_USER`, and `MB_DB_PASS` environment variables stated in the metabase config file `/etc/default/metabase` (See Step 3)
 - Make sure nginx is set up to proxy requests to metabase. The content of the nginx config file I use is `/etc/nginx/sites-available/default`. The content is as follows:
 ```
@@ -178,5 +177,5 @@ Enable the service to startup during boot
 ```
 sudo systemctl enable metabase.service
 ```
-That's it!
+That's it! Now I can access the Metabase through the the address `http://192.168.1.157:80`.
 
