@@ -130,10 +130,11 @@ Restart=always
 WantedBy=multi-user.target
 ```
 *Note:* 
-- *The `After=network.target` directive means the metabase.service unit will be started after the network.target unit has been activated.
-- *The `WantedBy` directive is used to specify the target unit that the current unit should be started as part of. `WantedBy=multi-user.target` means that the unit should be activated as part of the multi-user.target. The multi-user.target is a target unit that represents the state of the system when it is fully operational
-- *`ExecStart=`: This specifies the full path and the arguments of the command to be executed to start the process.
-- *`Type=simple` indicates that the unit being defined is a simple service unit.
+- *The `After=network.target` directive means the metabase.service unit will be started after the network.target unit has been activated.*
+- *`WantedBy=multi-user.target` means that the unit should be activated as part of the multi-user.target. The multi-user.target is a target unit that represents the state of the system when it is fully operational.*
+- *`ExecStart=`: This specifies the full path and the arguments of the command to be executed to start the process.*
+- *`Type=simple` indicates that the unit being defined is a simple service unit.*
+- *`Restart=always` tells Systemd to always restart the service process whenever it exits, regardless of the exit status.*
 #### 2. Create syslog conf
 Create a syslog conf to make sure systemd can handle the logs properly
 ```
