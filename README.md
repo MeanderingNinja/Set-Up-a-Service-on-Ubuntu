@@ -39,7 +39,7 @@ The internal structure of unit files are organized with **sections**. Sections a
 ##### *Unit-Specific Section Directives (The [Service] Section)*
 Sandwiched between the previous two sections, you will likely find unit type-specific sections. I'll only list The [Service] Section here. The [Service] section is used to provide configuration that is only applicable for services.
 
-## How I created a service for my cat bathroom monitoring system project
+## How I created a service for my Cat Bathroom Monitoring System
 The following unit file was created under `/etc/systemd/system/` and is named `cat_data_watcher.service`.  
 ```
 [Unit]
